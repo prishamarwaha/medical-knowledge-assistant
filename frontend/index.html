@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Medical Knowledge Assistant
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- BACKGROUND -->
+
+    <div class="background"></div>
+
+
+    <!-- MAIN APPLICATION -->
+
+    <main class="app-container">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+
+                <h1>
+                    Medical Knowledge Assistant
+                </h1>
+
+                <p>
+                    Reliable answers grounded in structured
+                    and semantic medical knowledge.
+                </p>
+
+            </div>
+
+
+            <div class="header-tags">
+
+                <span>KNOWLEDGE</span>
+
+                <span>•</span>
+
+                <span>EVIDENCE</span>
+
+                <span>•</span>
+
+                <span>RECONCILIATION</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- QUESTION CARD -->
+
+        <section class="glass-card question-card">
+
+            <h2>
+                Your Question
+            </h2>
+
+
+            <div class="question-row">
+
+                <input
+                    id="questionInput"
+                    type="text"
+                    placeholder="Ask a medical question..."
+                >
+
+
+                <button
+                    id="askButton"
+                >
+                    Get Answer
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOADING -->
+
+        <div
+            id="loading"
+            class="loading hidden"
+        >
+
+            <div class="loader"></div>
+
+            <p>
+                Processing through Medical Hybrid RAG pipeline...
+            </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorBox"
+            class="error-box hidden"
+        ></div>
+
+
+        <!-- RESULTS -->
+
+        <div
+            id="results"
+            class="hidden"
+        >
+
+
+            <!-- ANSWER -->
+
+            <section class="glass-card answer-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Answer
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        class="verified-badge"
+                    >
+
+                        <span
+                            class="status-dot"
+                        ></span>
+
+                        <span>
+                            Hybrid Retrieval
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="directAnswer"
+                    class="direct-answer"
+                ></div>
+
+            </section>
+
+
+            <!-- ADDITIONAL MEDICAL INFORMATION -->
+
+            <section class="glass-card">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Additional Medical Information
+                    </h2>
+
+                    <p>
+                        Key details retrieved from the
+                        Medical Knowledge Graph
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="kgInformation"
+                    class="info-grid"
+                ></div>
+
+            </section>
+
+
+            <!-- VECTOR EVIDENCE -->
+
+            <section class="glass-card">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Supporting Evidence
+                    </h2>
+
+                    <p>
+                        Relevant information retrieved through
+                        semantic vector search
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="vectorEvidence"
+                    class="evidence-container"
+                ></div>
+
+            </section>
+
+
+            <!-- RECONCILIATION -->
+
+            <section class="glass-card">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Retrieval Reconciliation
+                    </h2>
+
+                    <p>
+                        Comparison between Knowledge Graph
+                        and semantic retrieval
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="reconciliation-grid"
+                >
+
+
+                    <!-- STATUS -->
+
+                    <div
+                        class="metric-card"
+                    >
+
+                        <span
+                            class="metric-label"
+                        >
+                            Reconciliation Status
+                        </span>
+
+
+                        <div
+                            id="reconciliationStatus"
+                            class="status-value"
+                        >
+                            -
+                        </div>
+
+
+                        <p
+                            id="reconciliationDescription"
+                            class="metric-description"
+                        ></p>
+
+                    </div>
+
+
+                    <!-- CONFIDENCE -->
+
+                    <div
+                        class="metric-card confidence-card"
+                    >
+
+                        <span
+                            class="metric-label"
+                        >
+                            Confidence Score
+                        </span>
+
+
+                        <div
+                            class="confidence-content"
+                        >
+
+                            <div
+                                id="confidenceCircle"
+                                class="confidence-circle"
+                            >
+
+                                <span
+                                    id="confidenceValue"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <p>
+                                Based on evidence overlap
+                                between both retrieval systems.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- METRICS -->
+
+                <div
+                    class="metrics-grid"
+                >
+
+
+                    <div class="small-metric">
+
+                        <span>
+                            KG Terms
+                        </span>
+
+                        <strong
+                            id="kgTermCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="small-metric">
+
+                        <span>
+                            Vector Terms
+                        </span>
+
+                        <strong
+                            id="vectorTermCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="small-metric">
+
+                        <span>
+                            Matching Terms
+                        </span>
+
+                        <strong
+                            id="matchingTermCount"
+                        >
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- MATCHING TERMS -->
+
+                <div
+                    id="matchingTermsContainer"
+                    class="matching-terms-container"
+                >
+
+                    <h3>
+                        Evidence Alignment Terms
+                    </h3>
+
+
+                    <div
+                        id="matchingTerms"
+                        class="term-list"
+                    ></div>
+
+                </div>
+
+            </section>
+
+            
+            <!-- EVIDENCE GATE -->
+            <section class="glass-card">
+                <div class="section-heading">
+                    <h2>Evidence Validation Gate</h2>
+                    <p>Validation results from R1–R5 and the generation decision</p>
+                </div>
+
+                <div id="evidenceGateStatus" class="status-value">Awaiting query</div>
+                <p id="evidenceGateReason" class="metric-description"></p>
+
+                <div id="validationRules" class="info-grid"></div>
+            </section>
+
+            <!-- KNOWLEDGE GRAPH TRIPLES -->
+            <section class="glass-card">
+                <div class="section-heading">
+                    <h2>Knowledge Graph Evidence</h2>
+                    <p>Structured relations retrieved from Neo4j</p>
+                </div>
+                <div id="kgTriples" class="evidence-container"></div>
+            </section>
+
+            <!-- PUBMED RETRIEVAL -->
+            <section class="glass-card">
+                <div class="section-heading">
+                    <h2>PubMed Literature Retrieval</h2>
+                    <p>Articles retrieved for the submitted medical question</p>
+                </div>
+                <p id="pubmedQuery" class="metric-description"></p>
+                <div id="pubmedArticles" class="evidence-container"></div>
+            </section>
+
+            <!-- CLAIM AUDIT -->
+            <section class="glass-card">
+                <div class="section-heading">
+                    <h2>Claim-Level Audit Trail</h2>
+                    <p>Evidence candidates associated with generated claims</p>
+                </div>
+                <div id="claimAuditSummary" class="metric-description"></div>
+                <div id="claimAuditResults" class="evidence-container"></div>
+            </section>
+
+
+
+            <!-- KNOWLEDGE SOURCES -->
+
+            <section class="glass-card">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Knowledge Sources
+                    </h2>
+
+                    <p>
+                        Sources used during answer generation
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="sourcesContainer"
+                    class="sources-grid"
+                ></div>
+
+            </section>
+
+
+            <!-- PIPELINE -->
+
+            <section class="glass-card">
+
+                <div class="section-heading">
+
+                    <h2>
+                        Pipeline Execution
+                    </h2>
+
+                    <p>
+                        Status of each stage in the Medical
+                        Hybrid RAG pipeline
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="pipeline"
+                    class="pipeline"
+                ></div>
+
+            </section>
+
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <div>
+
+                <strong>
+                    Medical Knowledge Assistant
+                </strong>
+
+                <p>
+                    Hybrid RAG for Reliable Medical QA
+                </p>
+
+            </div>
+
+
+            <div>
+                Powered by Knowledge Graphs and
+                Semantic Retrieval
+            </div>
+
+        </footer>
+
+
+    </main>
+
+
+    <script
+        src="script.js"
+    ></script>
+
+
+</body>
+
+</html>
